@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Point de contrôle</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#0B0B0D; --panel:#141417; --line:#26262B; --ink:#F3F1EA; --muted:#8E8E96;
+  --accent:#FFD400; --accent-ink:#0B0B0D; --bad:#FF5A4E; --good:#5BE49B;
+  --display:"Barlow Condensed","Arial Narrow",Impact,sans-serif; --body:"Barlow",system-ui,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);padding:0 16px;padding-block:32px 48px;min-height:100vh}
+.wrap{max-width:460px;margin:0 auto}
+.board{border:6px solid #2A2A2E;background:#000;padding:22px 16px 18px;position:relative;overflow:hidden}
+.board::before,.board::after{content:"";position:absolute;left:0;right:0;height:10px;background:repeating-linear-gradient(90deg,var(--ink) 0 10px,#000 10px 20px)}
+.board::before{top:-6px} .board::after{bottom:-6px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,9vw,44px);letter-spacing:.04em;text-transform:uppercase;margin:6px 0 2px;line-height:1;color:var(--ink);text-wrap:balance}
+.sub{font-family:var(--display);font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-size:13px;margin:0 0 22px}
+form{display:grid;gap:14px}
+.f{display:grid;gap:6px}
+label{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase}
+.lbl{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase}
+.line{display:flex;flex-wrap:wrap;gap:6px 0;align-items:center}
+.grp{display:flex;gap:3px;align-items:center}
+.box{width:clamp(19px,4.9vw,28px);height:clamp(28px,7vw,36px);font:600 clamp(15px,4vw,20px)/1 var(--body);flex:none;text-align:center;text-transform:uppercase;color:var(--ink);background:var(--panel);border:1.5px solid var(--line);border-bottom:2px solid var(--muted);border-radius:3px;padding:0;outline:none;caret-color:var(--accent)}
+.box:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(255,212,0,.18)}
+.fx{font-family:var(--display);font-weight:800;font-size:clamp(18px,5vw,24px);color:var(--accent);letter-spacing:.06em;padding:0 5px;line-height:1;white-space:nowrap}
+.fx.sep{padding:0 3px;color:var(--muted)}
+.gap{width:clamp(8px,2.4vw,14px)}
+.grp.bad .box{border-color:var(--bad);color:var(--bad)}
+.grp.ok .box{border-color:var(--good);color:var(--good);background:rgba(91,228,155,.08);pointer-events:none}
+.grp .box{transition:color .15s,border-color .15s,background .15s}
+button{margin-top:6px;font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.16em;text-transform:uppercase;background:var(--accent);color:var(--accent-ink);border:0;border-radius:3px;padding:14px;cursor:pointer}
+button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+button[disabled]{opacity:.35;cursor:not-allowed}
+.msg{min-height:22px;margin:10px 0 0;font-size:14px;color:var(--muted)}
+.msg.bad{color:var(--bad)} 
+.reveal{display:grid;gap:0;border-top:1px solid var(--line)}
+.reveal .row{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.reveal .k{font-family:var(--display);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-size:14px}
+.reveal .v{font-weight:600;font-size:18px;line-height:1.3}
+.reveal .v.big{font-family:var(--display);font-weight:800;font-size:30px;color:var(--accent);letter-spacing:.03em}
+.note{margin:18px 0 20px;color:var(--ink);font-size:16px;line-height:1.45}
+a.cta{display:block;text-align:center;text-decoration:none;font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.14em;text-transform:uppercase;background:var(--accent);color:var(--accent-ink);padding:14px;border-radius:3px}
+a.cta:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.foot{margin-top:18px;text-align:center;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-family:var(--display)}
+@media (prefers-reduced-motion:no-preference){.board{animation:in .35s ease-out}@keyframes in{from{opacity:.6;transform:translateY(6px)}to{opacity:1;transform:none}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="board" id="board">
+    <h1>Point de contrôle</h1>
+    <p class="sub">Une lettre par case</p>
+    <form id="f" autocomplete="off">
+      <div class="f"><div class="lbl">Secteur 1</div>
+        <div class="line" data-pattern="_______ DE ______" data-words="s1a s1b"></div>
+      </div>
+      <div class="f"><div class="lbl">Secteur 2</div>
+        <div class="line" data-pattern="________-LE-_____" data-words="s2a s2b"></div>
+      </div>
+      <div class="f"><div class="lbl">Date</div>
+        <div class="line" data-pattern="__/__/2026" data-words="dd dm"></div>
+      </div>
+      <div class="f"><div class="lbl">Objectif</div>
+        <div class="line" data-pattern="__ ______" data-words="o1 o2"></div>
+      </div>
+      <button id="go" type="submit" disabled>Valider</button>
+      <p class="msg" id="msg" aria-live="polite"></p>
+    </form>
+    <div id="out" hidden></div>
+  </div>
+  <p class="foot">RAF · P23 · L10 · BOX</p>
+</div>
+<script>
+const S = {"salt": "cGl0bGFuZS0yMDI2", "iter": 120000, "fields": {"s1a": ["t4MdcZLr3rYW/WVVowgLBx+x1PWRM8dvtubnsyKSnzW/cfWXhmR4AJo/61/RrdJpQtVDjRiaGa+/+HYK"], "s1b": ["gTxlexS+3hYduwXM+L10OH27L6PAiypYip9KhauKfRERm3tYh7Xnv82ucT2PaQR+fLwcJa7nse6w5QJ+"], "s2a": ["cFLzmb2ALkmltI89Y/WHfp/TRvJ0gWfsTrDJo7Ec59lbZt6dJ9biJCl5+qaKZSUza3lUSVDJYmRBpryB"], "s2b": ["Pi3NGdOjyJW2OsNrVSJVyI2E5E/o6Py94YfUGWC5Jh8gEeQFZl5I2EKKY+RGuP5xgTa6UzLqLkUpx3gf"], "dd": ["OrMtevlxzXwZ/60z18zC8BGPhW298dfW7wUVt0KjAvHQtR5OJoAIfK6VT/u/8H0yj3Oci+P2oTgUa61v"], "dm": ["5l/6tePiVHSRtPnkn+1c6Y8eG0ritLNs0SupQsoa/LVTENHHZE1Q3Fqc3SBZbuCyb9pMX9zKsv0KqlKo"], "o1": ["vWF9ykDIDj5/JxZA5yOkryEaMq5QpSOQZTYqU9o6xWX+fNh0m1hvLk+DYEYmU3bQc5yGrbdrBTARBhhn"], "o2": ["7Y1rYtArPZVMzfZ7WEwTFBlb43vt9eqQDypgQbX+OO2YJ9YuBjhB6RIt+tOAXGIqDSnnAS79Geh1B0Kw"]}, "payload": "ZQMtIF5ITW+JGd2YDSgW25Tr1hioSiKob+iQ9ygohqSUXy9BVBoQDReOlP4abcderdryNr1a3h14clFyw/pG0LusFG7HkRql3WD+0nvviPolutiWv+7wA0vOFurLK7hN0m8a/EbG8ZyvfTiIlJirN6H97J8jgJKbGFvnXPIAg71lRP/uGmJ3tkzV8oFicxaO8j4DwBpHhlklHE8MWvbvzNHg8ws4/iaog1jEKV3uXIkipROgeSkz8UEYUni2HHR2RlQKwusG65QSSz5bTog82GW5nOuiKScEgppB4Mb3exzy7lnpUZKFiBMRV42aFkqGeohh8oLzG49hPF5nvfSmb8kdvIbk1xKM0rkpNryHfjc7d23ZO7svd8iUbsAT0hLdF1f8tcsz8mGc32XB0x85a5djd1X6AeDkcL+nv2GgfcMeiuwmKSyUI66Tk7E4olRLPdyRGISiiGFVq/TZYLYqbUEp0ug9IALSMTJF3YgYaACKWhGXMpuGpZFIOfQysnUKRa98kZpm+mAeHnnIMzpJFPRWSSqutpfG5KThWTB6Axu8fstYI2tCYPyDs1M40Nx7PcAE+xpSvO9n9lmxHKDwKX7m4x7mlzXxmfXyLqfmyunI7FM0k23+XDsw/W1kmw=="};
+const enc = new TextEncoder();
+const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+async function kdf(pw){
+  const base = await crypto.subtle.importKey("raw", enc.encode(pw), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2", salt:b64(S.salt), iterations:S.iter, hash:"SHA-256"}, base, {name:"AES-GCM", length:256}, false, ["decrypt"]);
+}
+async function open(key, blob){
+  const b = b64(blob);
+  return new Uint8Array(await crypto.subtle.decrypt({name:"AES-GCM", iv:b.slice(0,12)}, key, b.slice(12)));
+}
+async function unwrap(field, answer){
+  const key = await kdf(norm(answer));
+  for (const w of S.fields[field]) { try { return await open(key, w); } catch (e) {} }
+  return null;
+}
+const $ = id => document.getElementById(id);
+const WORDS = ["s1a","s1b","s2a","s2b","dd","dm","o1","o2"];
+const words = {};   // id -> {grp, boxes, secret}
+let boxes = [];
+document.querySelectorAll(".line").forEach((line, li) => {
+  const pat = line.dataset.pattern, ids = line.dataset.words.split(" "); let wi = 0, n = 0;
+  let grp = null, fixed = "";
+  const newGrp = () => { grp = document.createElement("span"); grp.className = "grp"; line.appendChild(grp); };
+  const flush = () => { if (!fixed) return; const f = document.createElement("span"); f.className = "fx" + (/^[-\/]$/.test(fixed) ? " sep" : ""); f.textContent = fixed; grp.appendChild(f); fixed = ""; };
+  newGrp();
+  for (const ch of pat) {
+    if (ch === "_") {
+      flush();
+      if (!grp.dataset.word) { grp.dataset.word = ids[wi++]; words[grp.dataset.word] = {grp, boxes: [], secret: null}; }
+      const b = document.createElement("input"); b.className = "box"; b.maxLength = 1;
+      b.inputMode = /^[\d_\/]*$/.test(pat) ? "numeric" : "text";
+      b.autocapitalize = "characters"; b.spellcheck = false; b.setAttribute("aria-label", "lettre");
+      b.id = "b" + li + "_" + (n++); b.dataset.word = grp.dataset.word;
+      grp.appendChild(b); boxes.push(b); words[grp.dataset.word].boxes.push(b);
+    } else if (ch === " ") {
+      flush(); const g = document.createElement("span"); g.className = "gap"; line.appendChild(g); newGrp();
+    } else {
+      fixed += ch;
+      if (/[-\/]/.test(ch)) { flush(); newGrp(); }
+    }
+  }
+  flush();
+});
+const nextFree = (i, dir) => { let k = i + dir; while (boxes[k] && boxes[k].readOnly) k += dir; return boxes[k]; };
+const wordValue = w => words[w].boxes.map(b => b.value || "?").join("");
+const allOk = () => WORDS.every(w => words[w].secret);
+const refreshButton = () => { $("go").disabled = !allOk(); $("msg").textContent = allOk() ? "Tous les secteurs sont verts." : ""; $("msg").className = "msg"; };
+async function checkWord(w){
+  const W = words[w];
+  if (W.checking || W.secret || W.boxes.some(b => !b.value)) return;
+  W.checking = true;
+  const lock = on => W.boxes.forEach(b => { b.readOnly = on; b.tabIndex = on ? -1 : 0; });
+  lock(true);
+  const nb = nextFree(boxes.indexOf(W.boxes[W.boxes.length - 1]), 1); if (nb) nb.focus();
+  const secret = await unwrap(w, wordValue(w));
+  W.checking = false;
+  if (secret) {
+    W.secret = secret; W.grp.classList.remove("bad"); W.grp.classList.add("ok");
+  } else {
+    lock(false); W.grp.classList.add("bad");
+  }
+  refreshButton();
+}
+boxes.forEach((b, i) => {
+  const W = () => words[b.dataset.word];
+  b.addEventListener("focus", () => {
+    if (b.readOnly) return;
+    W().grp.classList.remove("bad");
+    // clicking on a filled letter clears it and everything after it in the word, then filling resumes from here
+    const wb = W().boxes, k = wb.indexOf(b);
+    if (b.value) wb.slice(k).forEach(x => x.value = "");
+    b.select();
+  });
+  b.addEventListener("input", () => {
+    if (b.readOnly) return;
+    W().grp.classList.remove("bad");
+    b.value = b.value.replace(/[^\p{L}\p{N}]/gu, "").slice(-1).toUpperCase();
+    if (b.value) { const nb = nextFree(i, 1); if (nb && nb.dataset.word === b.dataset.word) nb.focus(); }
+    checkWord(b.dataset.word);
+  });
+  b.addEventListener("keydown", e => {
+    if (b.readOnly) return;
+    if (e.key === "Backspace" && !b.value) { const pb = nextFree(i, -1); if (pb) { pb.focus(); pb.value = ""; words[pb.dataset.word].grp.classList.remove("bad"); } e.preventDefault(); }
+    if (e.key === "ArrowLeft") { const pb = nextFree(i, -1); if (pb) pb.focus(); e.preventDefault(); }
+    if (e.key === "ArrowRight") { const nb = nextFree(i, 1); if (nb) nb.focus(); e.preventDefault(); }
+  });
+  b.addEventListener("paste", e => {
+    const t = (e.clipboardData.getData("text") || "").replace(/[^\p{L}\p{N}]/gu, "").toUpperCase();
+    if (!t) return; e.preventDefault();
+    let k = i; const touched = new Set();
+    for (const ch of t) { while (boxes[k] && boxes[k].readOnly) k++; if (!boxes[k]) break; boxes[k].value = ch; touched.add(boxes[k].dataset.word); k++; }
+    touched.forEach(w => checkWord(w));
+    (nextFree(k - 1, 1) || boxes[boxes.length - 1]).focus();
+  });
+});
+$("f").addEventListener("submit", async ev => {
+  ev.preventDefault();
+  if (!allOk()) return;
+  const btn = $("go"), msg = $("msg");
+  btn.disabled = true; msg.className = "msg"; msg.textContent = "Ouverture…";
+  try {
+    const ikm = new Uint8Array(WORDS.flatMap(w => [...words[w].secret]));
+    const base = await crypto.subtle.importKey("raw", ikm, "HKDF", false, ["deriveKey"]);
+    const master = await crypto.subtle.deriveKey({name:"HKDF", hash:"SHA-256", salt:b64(S.salt), info:enc.encode("reveal")}, base, {name:"AES-GCM", length:256}, false, ["decrypt"]);
+    const p = JSON.parse(new TextDecoder().decode(await open(master, S.payload)));
+    render(p);
+  } catch (e) { msg.className = "msg bad"; msg.textContent = "Erreur d'ouverture. Réessaie."; btn.disabled = false; }
+});
+function render(p){
+  $("f").hidden = true;
+  const out = $("out"); out.hidden = false;
+  document.querySelector(".sub").textContent = p.title;
+  const rows = p.lines.map(([k,v],i) => `<div class="row"><div class="k">${k}</div><div class="v${i===0?" big":""}">${v}</div></div>`).join("");
+  out.innerHTML = `<div class="reveal">${rows}</div><p class="note">${p.note}</p><a class="cta" href="${p.url}" target="_blank" rel="noopener">${p.cta}</a>`;
+}
+</script>
+
+</body>
+</html>
