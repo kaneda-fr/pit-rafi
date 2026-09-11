@@ -1,0 +1,3 @@
+- Preview: python3 -m http.server 8766 --bind 127.0.0.1 --directory /Users/kaneda/dev/pit-rafi
+- No npm/build/test scripts. Open http://127.0.0.1:8766 in a browser.
+- serena memories check audits memory references.

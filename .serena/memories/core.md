@@ -1,0 +1,3 @@
+- Static site: index.html, two runtime assets under assets/ (original F4 photo and exact RGBA cutout). No build framework. Encrypted S holds answer shares and gift content.
+- User's updated source /Users/kaneda/Downloads/point-de-controle/index.html supplied the current encrypted S and detailed reveal layout (hero, convocation, programme, sensations, ecurie, note/sign/link). Do not revert S to older HEAD: schema differs.
+- Interaction constraints: `mem:conventions`; crypto/assets: `mem:tech_stack`; preview: `mem:suggested_commands`; validation: `mem:task_completion`.

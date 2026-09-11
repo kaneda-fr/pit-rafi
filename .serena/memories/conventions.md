@@ -1,0 +1,5 @@
+- Birthday surprise for user's son: he solves rebuses/clues outside the site. Keep original initial screen/layout/mobile sizing; no extra hint, vehicle, brand, progress/count before validation. User explicitly removed both RAF · P23 · L10 · BOX and Une lettre par case.
+- After successful decryption: five pairs of red lights one second apart, variable final hold, simultaneous lights out. Then exact F4 silhouette becomes supplied photo with zoom; same photo settles into the reveal page. No skip button.
+- Reveal uses the user's updated encrypted content/layout, not mock data. R-ace GP official colors #f0005a, #000310, white; apply only after validation.
+- assets/f4-race-inside.png is the original attached photo; assets/f4-cutout.png is pixel-aligned RGBA segmentation at1086x840. Do not use the rejected generated/checkerboard version.
+- Explicit [hidden] rule prevents display:grid overrides. Set focus/inert after landing. Preserve reduced-motion handling.

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Point de contrôle</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Barlow:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800;900&family=Barlow:wght@400;500;600&display=swap">
 <style>
 :root{
   --bg:#0B0B0D; --panel:#141417; --line:#26262B; --ink:#F3F1EA; --muted:#8E8E96;
@@ -50,13 +50,103 @@ a.cta{display:block;text-align:center;text-decoration:none;font-family:var(--dis
 a.cta:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .foot{margin-top:18px;text-align:center;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-family:var(--display)}
 @media (prefers-reduced-motion:no-preference){.board{animation:in .35s ease-out}@keyframes in{from{opacity:.6;transform:translateY(6px)}to{opacity:1;transform:none}}}
+
+#reveal[hidden]{display:none}
+#reveal{opacity:0;transition:opacity .6s ease}
+#reveal.in{opacity:1}
+.hero{position:relative;background:#000;color:var(--ink);padding:0 16px;padding-block:56px 40px;overflow:hidden;border-bottom:4px solid var(--race)}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(60% 50% at 70% 40%,rgba(225,6,0,.22),transparent 70%),
+  repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 2px,transparent 2px 14px)}
+.hero .in{position:relative;max-width:960px;margin:0 auto;display:grid;gap:22px}
+.kicker{font-family:var(--display);font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--race);font-size:14px;margin:0}
+.hero h2{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(44px,9vw,96px);line-height:.95;letter-spacing:.01em;margin:0;text-wrap:balance}
+.hero p{font-size:clamp(17px,2.4vw,22px);max-width:60ch;margin:0;color:#D8D5CC;line-height:1.4}
+.hero .carwrap{margin-top:10px}
+.hero .carwrap svg{width:min(100%,720px);height:auto;display:block;margin-left:auto}
+.strip{background:var(--race);color:#fff;font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:15px;padding:10px 16px;overflow:hidden;white-space:nowrap}
+.strip span{display:inline-block;padding-right:48px;animation:marquee 22s linear infinite}
+@keyframes marquee{to{transform:translateX(-50%)}}
+main{background:#F5F3EE;color:#121214;padding:0 16px;padding-block:40px 64px}
+main .in{max-width:960px;margin:0 auto;display:grid;gap:44px}
+section h3{font-family:var(--display);font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(26px,4vw,36px);margin:0 0 16px;color:#121214;border-left:6px solid var(--race);padding-left:14px;line-height:1}
+.convo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;border:1px solid #D9D6CF;background:#fff}
+.convo .row{padding:16px 18px;border-bottom:1px solid #E6E3DC;display:grid;gap:4px}
+.convo .k{font-family:var(--display);font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13px;color:#6B6B72}
+.convo .v{font-weight:600;font-size:18px;line-height:1.3}
+.convo .row.big .v{font-family:var(--display);font-weight:900;font-size:40px;color:var(--race);line-height:1;letter-spacing:.02em}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.stat{background:#121214;color:var(--ink);padding:22px 20px;display:grid;gap:8px;border-top:4px solid var(--race)}
+.stat .n{font-family:var(--display);font-weight:900;font-size:56px;line-height:1;letter-spacing:.02em}
+.stat .u{font-family:var(--display);font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:13px;color:#B9B6AE;margin-top:-6px}
+.stat .d{font-size:15px;line-height:1.4;color:#D8D5CC}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:16px;padding:10px 14px;border:2px solid #121214;background:#fff}
+.ecurie{font-size:17px;line-height:1.55;max-width:70ch;margin:0;color:#2A2A2E}
+.closing{background:#fff;border:1px solid #D9D6CF;padding:26px 22px;display:grid;gap:18px}
+.closing .note{font-family:var(--display);font-weight:800;font-size:clamp(26px,4vw,34px);line-height:1.1;margin:0;text-transform:uppercase;letter-spacing:.02em}
+a.cta{display:inline-block;justify-self:start;text-decoration:none;font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:.14em;text-transform:uppercase;background:var(--race);color:#fff;padding:16px 22px}
+a.cta:hover{background:var(--race-dark)} a.cta:focus-visible{outline:3px solid #121214;outline-offset:2px}
+footer{background:#000;color:var(--muted);text-align:center;font-family:var(--display);letter-spacing:.14em;text-transform:uppercase;font-size:12px;padding:18px 16px}
+
+/* The birthday reveal starts only after the encrypted answers have been validated. */
+[hidden]{display:none!important}
+:root{--race:#f0005a;--race-dark:#b50044;--carbon:#000310;--ease:cubic-bezier(.22,1,.36,1)}
+body.reveal-mode{padding:0;background:var(--carbon)}
+body.is-launching{overflow:hidden}
+.is-launching #checkpoint{opacity:0;transform:translateY(-8px);transition:opacity .65s ease,transform .65s ease}
+#launch{position:fixed;inset:0;z-index:50;overflow:hidden;isolation:isolate;color:#fff;outline:none;opacity:0;transition:opacity .65s ease}
+#launch.is-visible{opacity:1}
+.launch-backdrop{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 58%,#f0005a17,transparent 56%),#000310;transition:opacity 1.1s ease}
+.launch-backdrop::after{content:"";position:absolute;left:0;right:0;top:50%;height:26%;background:radial-gradient(ellipse at center,#f0005a0c,transparent 65%);filter:blur(25px)}
+.start-sequence{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:38px;padding:24px;transition:opacity .5s ease,transform .7s var(--ease)}
+.start-eyebrow{font:500 11px var(--body);letter-spacing:.3em;text-transform:uppercase;margin:0;color:#8f93a6}
+.start-title{font:800 clamp(36px,6vw,68px)/1 var(--display);text-transform:uppercase;letter-spacing:.035em;margin:0}
+.start-lights{display:flex;gap:clamp(8px,2vw,20px);padding:clamp(12px,2.6vw,25px);position:relative;border:1px solid #343743;border-top-color:#555864;border-radius:8px;background:linear-gradient(#1a1c24,#0a0c13);box-shadow:0 28px 60px #0008}
+.start-lights::before,.start-lights::after{content:"";position:absolute;top:calc(50% - 9px);width:18vw;height:18px;background:linear-gradient(#1e212c,#080a12);border-block:1px solid #2d303a;z-index:-1}
+.start-lights::before{right:100%}.start-lights::after{left:100%}
+.light-column{padding:7px;display:grid;gap:12px;border:1px solid #272934;border-radius:40px;background:#070910;box-shadow:inset 0 3px 5px #000}
+.light-column i{display:block;width:clamp(27px,6.4vw,58px);aspect-ratio:1;border-radius:50%;background:#22070d;border:1px solid #351019;box-shadow:inset 0 2px 8px #000;position:relative}
+.light-column i::after{content:"";position:absolute;inset:3px;border-radius:inherit;opacity:.2;background:radial-gradient(circle,#fff 0 1px,transparent 1.2px) 0 0/4px 4px}
+.light-column.on i{background:#ff173d;border-color:#ff6673;box-shadow:0 0 26px #f0005a65,0 0 65px #f0005a28,inset 0 0 14px #ff787455}
+.start-caption{font:500 10px var(--body);letter-spacing:.22em;text-transform:uppercase;color:#9195a8;margin:0}
+.race-stage{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .8s ease}
+.race-stage::before{content:"";position:absolute;inset:18% 5% 12%;background:radial-gradient(ellipse,#f0005a38,transparent 65%);opacity:.8}
+.race-stage::after{content:"";position:absolute;top:32px;right:5vw;width:70px;height:10px;background:repeating-linear-gradient(115deg,var(--race) 0 12px,transparent 12px 19px);opacity:.85}
+.race-wordmark{position:absolute;top:30px;left:5vw;font:800 20px var(--display);letter-spacing:.025em;font-style:italic;color:white;text-transform:uppercase}
+.race-wordmark span{color:var(--race)}
+.race-caption{position:absolute;left:0;right:0;bottom:10%;text-align:center;z-index:3;opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform 1s var(--ease)}
+.race-caption p{font:500 10px var(--body);letter-spacing:.25em;color:#aaadbd;text-transform:uppercase;margin:0 0 11px}
+.race-caption h2{font:800 clamp(38px,6vw,72px)/.95 var(--display);letter-spacing:.025em;text-transform:uppercase;margin:0;color:#fff}
+.race-caption h2 span{color:var(--race)}
+.vehicle-frame{position:absolute;left:50%;top:47%;width:min(1100px,108vw);aspect-ratio:1086/840;transform:translate(-50%,-55%) scale(.72);transform-origin:50% 55%;will-change:transform;isolation:isolate;overflow:hidden}
+.vehicle-frame img,.vehicle-silhouette{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 57%;display:block}
+.vehicle-photo{opacity:0;transition:opacity 1.7s cubic-bezier(.4,0,.2,1);z-index:1}
+.vehicle-silhouette{z-index:2;opacity:1;transition:opacity 1.45s ease;filter:brightness(0) drop-shadow(0 0 1px #ffc2d2) drop-shadow(0 0 22px #f0005a50)}
+#launch.has-car .start-sequence{opacity:0;transform:translateY(-16px)}
+#launch.has-car .race-stage{opacity:1}
+#launch.has-photo .vehicle-photo{opacity:1}
+#launch.has-photo .vehicle-silhouette{opacity:0}
+#launch.has-photo .race-caption{opacity:1;transform:translateY(0)}
+#launch.is-landing .launch-backdrop,#launch.is-landing .race-stage::before,#launch.is-landing .race-stage::after,#launch.is-landing .race-wordmark,#launch.is-landing .race-caption{opacity:0;transition:opacity .55s ease}
+#launch.is-landing .vehicle-silhouette{display:none}
+#launch.is-landing .vehicle-frame{will-change:auto}
+.reveal-landing .hero-photo{visibility:hidden}
+#reveal .hero .carwrap{position:relative;aspect-ratio:16/9;overflow:hidden;margin-top:10px;border:1px solid #ffffff25;background:#000310}
+#reveal .hero-photo{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 57%}
+#reveal .hero{background:#000310}
+#reveal .hero::before{background:radial-gradient(60% 50% at 70% 40%,#f0005a20,transparent 70%),repeating-linear-gradient(135deg,#ffffff06 0 2px,transparent 2px 14px)}
+#reveal .hero h2:focus{outline:none}
+#reveal .closing .note{color:#121214}
+@media(max-width:600px){.start-sequence{gap:28px;padding:16px}.start-lights{padding:11px;gap:7px}.light-column{gap:9px;padding:5px}.start-caption{font-size:8px;letter-spacing:.16em}.vehicle-frame{width:135vw;top:47%}.race-caption{bottom:16%;padding:0 20px}.race-caption h2{font-size:clamp(34px,9.5vw,54px)}.race-wordmark{top:26px;font-size:17px}.race-stage::after{top:30px;width:50px;height:7px}}
+@media(max-height:520px) and (min-width:600px){.start-sequence{gap:17px}.start-title{font-size:30px}.start-lights{padding:10px}.light-column{gap:7px;padding:5px}.light-column i{width:32px}.start-caption{font-size:8px}.race-wordmark{top:18px;font-size:16px}.race-stage::after{top:20px}.vehicle-frame{width:min(720px,80vw);top:45%}.race-caption{bottom:7%}.race-caption p{font-size:8px;margin-bottom:6px}.race-caption h2{font-size:34px}}
+@media(prefers-reduced-motion:reduce){.is-launching #checkpoint{transform:none}#launch,.start-sequence,.race-stage,.vehicle-photo,.vehicle-silhouette,.race-caption{transition:none}.strip span{animation:none}.vehicle-frame{transform:translate(-50%,-55%)}#reveal{transition:none}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="wrap" id="checkpoint">
   <div class="board" id="board">
     <h1>Point de contrôle</h1>
-    <p class="sub">Une lettre par case</p>
     <form id="f" autocomplete="off">
       <div class="f"><div class="lbl">Secteur 1</div>
         <div class="line" data-pattern="_______ DE ______" data-words="s1a s1b"></div>
@@ -73,12 +163,29 @@ a.cta:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
       <button id="go" type="submit" disabled>Valider</button>
       <p class="msg" id="msg" aria-live="polite"></p>
     </form>
-    <div id="out" hidden></div>
   </div>
-  <p class="foot">RAF · P23 · L10 · BOX</p>
 </div>
+<div id="launch" role="dialog" aria-modal="true" aria-label="La surprise se dévoile" tabindex="-1" hidden>
+  <div class="launch-backdrop" aria-hidden="true"></div>
+  <div class="start-sequence" aria-hidden="true">
+    <p class="start-eyebrow">Le grand moment</p>
+    <h2 class="start-title">Tout commence ici.</h2>
+    <div class="start-lights" id="lights"><span class="light-column"><i></i><i></i></span><span class="light-column"><i></i><i></i></span><span class="light-column"><i></i><i></i></span><span class="light-column"><i></i><i></i></span><span class="light-column"><i></i><i></i></span></div>
+    <p class="start-caption">Retiens ton souffle.</p>
+  </div>
+  <div class="race-stage" aria-hidden="true">
+    <div class="race-wordmark">R-ace <span>GP</span></div>
+    <div class="vehicle-frame" id="vehicle-frame">
+      <img class="vehicle-photo" id="vehicle-photo" src="assets/f4-race-inside.png" width="1086" height="840" alt="">
+      <img class="vehicle-silhouette" id="vehicle-silhouette" src="assets/f4-cutout.png" width="1086" height="840" alt="">
+    </div>
+    <div class="race-caption"><p>La surprise prend vie.</p><h2>Joyeux <span>anniversaire.</span></h2></div>
+  </div>
+</div>
+<div id="reveal" hidden></div>
+
 <script>
-const S = {"salt": "cGl0bGFuZS0yMDI2", "iter": 120000, "fields": {"s1a": ["t4MdcZLr3rYW/WVVowgLBx+x1PWRM8dvtubnsyKSnzW/cfWXhmR4AJo/61/RrdJpQtVDjRiaGa+/+HYK"], "s1b": ["gTxlexS+3hYduwXM+L10OH27L6PAiypYip9KhauKfRERm3tYh7Xnv82ucT2PaQR+fLwcJa7nse6w5QJ+"], "s2a": ["cFLzmb2ALkmltI89Y/WHfp/TRvJ0gWfsTrDJo7Ec59lbZt6dJ9biJCl5+qaKZSUza3lUSVDJYmRBpryB"], "s2b": ["Pi3NGdOjyJW2OsNrVSJVyI2E5E/o6Py94YfUGWC5Jh8gEeQFZl5I2EKKY+RGuP5xgTa6UzLqLkUpx3gf"], "dd": ["OrMtevlxzXwZ/60z18zC8BGPhW298dfW7wUVt0KjAvHQtR5OJoAIfK6VT/u/8H0yj3Oci+P2oTgUa61v"], "dm": ["5l/6tePiVHSRtPnkn+1c6Y8eG0ritLNs0SupQsoa/LVTENHHZE1Q3Fqc3SBZbuCyb9pMX9zKsv0KqlKo"], "o1": ["vWF9ykDIDj5/JxZA5yOkryEaMq5QpSOQZTYqU9o6xWX+fNh0m1hvLk+DYEYmU3bQc5yGrbdrBTARBhhn"], "o2": ["7Y1rYtArPZVMzfZ7WEwTFBlb43vt9eqQDypgQbX+OO2YJ9YuBjhB6RIt+tOAXGIqDSnnAS79Geh1B0Kw"]}, "payload": "ZQMtIF5ITW+JGd2YDSgW25Tr1hioSiKob+iQ9ygohqSUXy9BVBoQDReOlP4abcderdryNr1a3h14clFyw/pG0LusFG7HkRql3WD+0nvviPolutiWv+7wA0vOFurLK7hN0m8a/EbG8ZyvfTiIlJirN6H97J8jgJKbGFvnXPIAg71lRP/uGmJ3tkzV8oFicxaO8j4DwBpHhlklHE8MWvbvzNHg8ws4/iaog1jEKV3uXIkipROgeSkz8UEYUni2HHR2RlQKwusG65QSSz5bTog82GW5nOuiKScEgppB4Mb3exzy7lnpUZKFiBMRV42aFkqGeohh8oLzG49hPF5nvfSmb8kdvIbk1xKM0rkpNryHfjc7d23ZO7svd8iUbsAT0hLdF1f8tcsz8mGc32XB0x85a5djd1X6AeDkcL+nv2GgfcMeiuwmKSyUI66Tk7E4olRLPdyRGISiiGFVq/TZYLYqbUEp0ug9IALSMTJF3YgYaACKWhGXMpuGpZFIOfQysnUKRa98kZpm+mAeHnnIMzpJFPRWSSqutpfG5KThWTB6Axu8fstYI2tCYPyDs1M40Nx7PcAE+xpSvO9n9lmxHKDwKX7m4x7mlzXxmfXyLqfmyunI7FM0k23+XDsw/W1kmw=="};
+const S = {"salt": "cGl0bGFuZS0yMDI2", "iter": 120000, "fields": {"s1a": ["+LcYyqhL482ilYLKV2NGA4c4w9BG1R0B/kgmjYmxmNde0iMwpx7IuLK/iL0WH3NVsZHp2n4dPwNIp+Og"], "s1b": ["fYgvxfXydaWv7yWVJQylfiBku8vRIQ94yAKNM+RpAGG0ErZg6EwBEkBOVziOvZ+AGCcXvVUtLEjtLFwU"], "s2a": ["Y/rreq8XvrIZR6mt5AXV0If27M4+6aPZUK8NZpEWMpf0wZTnQiGH59R4A1P23B7rPJKUXdQenFKYlZku"], "s2b": ["Wnodml/k9IyIXpLg+MVjaJFPQ1emGTSuOho1V9AtqGsdonCePPaw5R+MAHbu4Fz1+aEGcs32I17i3iII"], "dd": ["4RpvSCruRQ/cebvxy9gQ+7KwZhZj/QjIEHwJi2LW60xKwqtwBcAx+oMTgkVzk6o4qJ09TyccHsfLyNm1"], "dm": ["n4gGsjrNlFZF38ahgUjLJTSVPdJJSc69v5UhxHiJyatIwEZw/tylIMcbP6hJ9rw7d2rBURS0mDU9rmnu"], "o1": ["bEmR8CNZrO+X7th8Ub3kRTET0suTvNYcc+ByZ8mxgcnGvMRDm4RoywrHblcITx8VKkCMgmeNah6x6zQ5"], "o2": ["bcFtZjjGsuileZC5z7G9zxMmwsLZvVdt8iXSqMis7EAH8sXIL5O/44mvxNDsE+Rd2QAogyYkwTKlyVsU"]}, "payload": "IkAxzLkL72n/A8DmqJ+9Zp8kf2BpOTZ1HnQ+1x9NfMEoTcXNz30K4fbwIpkEjfu+K9m2kL0ulezOTJyXuRHYhd1UAcktjgW3A+g/nXFjToeEq6DmxL5AeMszGXRgjQkMuECezjrCWcOlGNJJBH7Ll2E4y/XcGffXn3+rvuJ7Lh+Ql55ECqagvZMZ2Z/ETq8/5Wyqzalsz5qtQJsBTeZZDfGGrjOQgn7gRCAH284W4CMV82hNESJ4WoKM3js8vFpnhQohvZBabHkhEhMfwlnrmSiNM4IfE/mcXTBNRJ3FjWcJpwiFo7zFMsjEiop2siNcD0t6SCnHvZUUdxdx9p3A8eBtjE7Oz5/xuCOxz4vo8RFkXl8lKN6G37mxX33r8JleircsX/WNu7eIFD65eFlanPRZ2Nkq365ps5wmPMeLV+q5QJkDvBHzgX+EsxfCt4XAcP7GntsCmtgkah0F9qwkHYChuAXYcaSERMHgsWYrq6CIkrrmJeO3GogIpEEydusXLxvKBbkk/pW3b7V/xOVWB7tmR0rpDfzKENcuP7X2wZtGSR+OXoE7KLdWRGJmnBl7YModr2MKhtlWMJlMbKpfcOzdb3x+M3Wf+BbxiRCmxfe5e7QSk6pED/UXNgQf5PeQD85Wup1Q03Tw07ZzQ5HMtQgoHjwtsBkb6goLB7IdQrBEXXg6aehnsi/yFqbn9/61As1NQBX4ZzC2Pe453GQ7U7M48bd1Yv2qdy9NCnfyHlf4j5PC5S8OropUsjCNiglclCbe34DbQSWNy6zeCe6xWegmFB0mmasW7ajDk5I6yLOIovQ9h9rLkKplOLZDaMQBm1p7nYGkYiqvqsW6m2aP8pwieUH0u6vsN6d6wWWMcbRixfyIztmhGHLOhQIw+e69zGVnKdXDj4iEiJGDWcIFLJIBoQ1pJxvvNQ4EgyClCNCYHLvMuX/ydsmJNV7CM1qCOXHR32+VyBU+ElBXNfWtL6QsdLaibNXl22rSnlXYaKhx5CzxNNlnmGlqdF7YKSrIS7q3jgrUNyn6YcwAR1LRd2P1Lzznf28Q/6bh1h2mA2npPuT+k1JyQGTEffF76Qr/axUZqpkd9NRpMgmM1/2OeahRvE+uAPj9J3vRnPMDcngsB7b5vUjdBKR0wE7CUXnRIHcEqYPfbT6Z3hlSvy085sP0Cwc75K1ThameTQMOPSB/55juBkP7hZpJZRoAETzVwZd5+G8LKsWxVv29PFUkft1lzXuUV3i8pZ81HHHkEqiZc0kkD4heGSTDZq2YAOPKL4GC1sbM8qUxUhNomW6lsvt93wvS5XGd9sJS53yj/WRILoMQXqZaqm0xMTwiSdQe05JfBZm4xGYrXhfizGA+G1l7IJjxwlZeftUXXyBvf0HE1DEeQDsbnpMI1MK6ps4mhgnSy3CDC1vdArbWAHIXfw35d9ru8tJqZHObT0/acuUCCLgy9f7+PvSNJtWfD3jus0XmEvdnTuExnObEy4o2IP9NaTC1Z8iuIqY2h7FRR2DbFKZJQfVBxVyNryEFPzu6uxV9MOSydEttcsDWwcdbR1y03GnRCftm6mFA+cdfHgxuO38+Yt1dj3FArjd9inusgzc69PpheTLJ0LHKyhEe2anylHqSlp15hhQJBw/jTRyOql6dLnoWRHosRza58AXem4GPCxKyKi1NokdAJemxrdOw/D29Xmj+hAcYckh3iTsxkUKWqBBgIQhEWGZgQfHYRUuCIBefUAzC3HMST8UhZMC+F+z0F/8cOLE0qtBgnsdBSADlrquRYhKTI/yBgq53KZmebooocxP9kYKjGngjnAzJwUker1OQKsjjQP3avhOhNXcbqTSFZpxJ1c1MU/PfH8A8jCdAk4FhV7T/zFBNrLELhFH6iyxoo7aQYiEU8EHtRmgW1HPZ8K269z24YyTZhI+Zkk6QLA=="};
 const enc = new TextEncoder();
 const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
 const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -126,7 +233,8 @@ document.querySelectorAll(".line").forEach((line, li) => {
 const nextFree = (i, dir) => { let k = i + dir; while (boxes[k] && boxes[k].readOnly) k += dir; return boxes[k]; };
 const wordValue = w => words[w].boxes.map(b => b.value || "?").join("");
 const allOk = () => WORDS.every(w => words[w].secret);
-const refreshButton = () => { $("go").disabled = !allOk(); $("msg").textContent = allOk() ? "Tous les secteurs sont verts." : ""; $("msg").className = "msg"; };
+let submitting = false;
+const refreshButton = () => { $("go").disabled = submitting || !allOk(); $("msg").textContent = allOk() ? "Tous les secteurs sont verts." : ""; $("msg").className = "msg"; };
 async function checkWord(w){
   const W = words[w];
   if (W.checking || W.secret || W.boxes.some(b => !b.value)) return;
@@ -177,23 +285,127 @@ boxes.forEach((b, i) => {
 });
 $("f").addEventListener("submit", async ev => {
   ev.preventDefault();
-  if (!allOk()) return;
+  if (!allOk() || submitting) return;
   const btn = $("go"), msg = $("msg");
+  submitting = true;
   btn.disabled = true; msg.className = "msg"; msg.textContent = "Ouverture…";
+  $("f").setAttribute("aria-busy", "true");
   try {
     const ikm = new Uint8Array(WORDS.flatMap(w => [...words[w].secret]));
     const base = await crypto.subtle.importKey("raw", ikm, "HKDF", false, ["deriveKey"]);
     const master = await crypto.subtle.deriveKey({name:"HKDF", hash:"SHA-256", salt:b64(S.salt), info:enc.encode("reveal")}, base, {name:"AES-GCM", length:256}, false, ["decrypt"]);
     const p = JSON.parse(new TextDecoder().decode(await open(master, S.payload)));
-    render(p);
-  } catch (e) { msg.className = "msg bad"; msg.textContent = "Erreur d'ouverture. Réessaie."; btn.disabled = false; }
+    await revealWithLaunch(p);
+  } catch (e) {
+    resetLaunch();
+    msg.className = "msg bad"; msg.textContent = "Erreur d'ouverture. Réessaie.";
+    submitting = false; btn.disabled = !allOk();
+  } finally { $("f").removeAttribute("aria-busy"); }
 });
-function render(p){
-  $("f").hidden = true;
-  const out = $("out"); out.hidden = false;
-  document.querySelector(".sub").textContent = p.title;
-  const rows = p.lines.map(([k,v],i) => `<div class="row"><div class="k">${k}</div><div class="v${i===0?" big":""}">${v}</div></div>`).join("");
-  out.innerHTML = `<div class="reveal">${rows}</div><p class="note">${p.note}</p><a class="cta" href="${p.url}" target="_blank" rel="noopener">${p.cta}</a>`;
+// FIA B5.7.2: one second between red lights; the final hold is not a fixed countdown.
+const START_TIMING = {firstLight:900, lightInterval:1000, minimumHold:1200, holdVariation:1600, photoDelay:1450, zoomDuration:4800, landingDuration:1100};
+const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+const nextFrame = () => new Promise(resolve => requestAnimationFrame(resolve));
+function resetLaunch(){
+  const scene = $("launch");
+  scene.hidden = true;
+  scene.className = "";
+  scene.querySelectorAll(".light-column").forEach(lamp => lamp.classList.remove("on"));
+  scene.getAnimations({subtree:true}).forEach(animation => animation.cancel());
+  $("vehicle-frame").removeAttribute("style");
+  $("checkpoint").inert = false;
+  $("reveal").inert = false;
+  document.body.classList.remove("is-launching", "reveal-landing");
+}
+async function revealWithLaunch(p){
+  const html = buildReveal(p);
+  const scene = $("launch"), frame = $("vehicle-frame");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Decode the actual photographs before the first light so the reveal never waits on an image.
+  await Promise.race([
+    Promise.all([$("vehicle-photo").decode(), $("vehicle-silhouette").decode()]),
+    new Promise((_, reject) => setTimeout(() => reject(new Error("Image loading timed out")), 8000))
+  ]);
+  $("checkpoint").inert = true;
+  $("reveal").inert = true;
+  scene.hidden = false;
+  scene.focus({preventScroll:true});
+  document.body.classList.add("is-launching");
+  await nextFrame();
+  scene.classList.add("is-visible");
+  if (reduced){
+    render(p, html);
+    resetLaunch();
+    $("reveal-title").focus({preventScroll:true});
+    return;
+  }
+  await pause(START_TIMING.firstLight);
+  const lamps = [...scene.querySelectorAll(".light-column")];
+  for (let i = 0; i < lamps.length; i++){
+    lamps[i].classList.add("on");
+    if (i < lamps.length - 1) await pause(START_TIMING.lightInterval);
+  }
+  await pause(START_TIMING.minimumHold + Math.random() * START_TIMING.holdVariation);
+  lamps.forEach(lamp => lamp.classList.remove("on"));
+  await pause(220);
+  scene.classList.add("has-car");
+  const zoom = frame.animate([
+    {transform:"translate(-50%,-55%) scale(.72)"},
+    {transform:"translate(-50%,-55%) scale(1.06)"}
+  ], {duration:START_TIMING.zoomDuration, easing:"cubic-bezier(.25,.1,.25,1)", fill:"forwards"});
+  await pause(START_TIMING.photoDelay);
+  scene.classList.add("has-photo");
+  await zoom.finished;
+  // Keep one photograph on screen as it settles into the supplied reveal page.
+  const from = frame.getBoundingClientRect();
+  render(p, html);
+  document.body.classList.add("reveal-landing");
+  await nextFrame();
+  const target = document.querySelector("#reveal .hero-photo").getBoundingClientRect();
+  zoom.cancel();
+  Object.assign(frame.style, {left:from.left+"px", top:from.top+"px", width:from.width+"px", height:from.height+"px", aspectRatio:"auto", transform:"none"});
+  scene.classList.add("is-landing");
+  const landing = frame.animate([
+    {left:from.left+"px", top:from.top+"px", width:from.width+"px", height:from.height+"px"},
+    {left:target.left+"px", top:target.top+"px", width:target.width+"px", height:target.height+"px"}
+  ], {duration:START_TIMING.landingDuration, easing:"cubic-bezier(.22,1,.36,1)", fill:"forwards"});
+  await landing.finished;
+  resetLaunch();
+  $("reveal-title").focus({preventScroll:true});
+}
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function buildReveal(p){
+  const convo = p.convocation.map(([k, v], i) => `<div class="row${i === 0 ? " big" : ""}"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`).join("");
+  const stats = p.programme.map(([n, u, d]) => `<div class="stat"><div class="n">${esc(n)}</div><div class="u">${esc(u)}</div><div class="d">${esc(d)}</div></div>`).join("");
+  const chips = p.sensations.map(s => `<span class="chip">${esc(s)}</span>`).join("");
+  const strip = Array(6).fill(`${esc(p.hero.kicker)} &nbsp;·&nbsp; Formule 4 &nbsp;·&nbsp; 23 . 10 . 2026 &nbsp;·&nbsp; `).join("");
+  return `
+    <div class="hero"><div class="in">
+      <p class="kicker">${esc(p.hero.kicker)}</p>
+      <h2 id="reveal-title" tabindex="-1">${esc(p.hero.title)}</h2>
+      <p>${esc(p.hero.sub)}</p>
+      <div class="carwrap"><img class="hero-photo" src="assets/f4-race-inside.png" width="1086" height="840" alt="La Formule 4 R-ace Inside sur le circuit"></div>
+    </div></div>
+    <div class="strip"><span>${strip}</span></div>
+    <main><div class="in">
+      <section><h3>Convocation</h3><div class="convo">${convo}</div></section>
+      <section><h3>Au programme</h3><div class="stats">${stats}</div></section>
+      <section><h3>Autre châssis, autres sensations</h3><div class="chips">${chips}</div></section>
+      <section><h3>L'écurie</h3><p class="ecurie">${esc(p.ecurie)}</p></section>
+      <section><div class="closing"><p class="note">Ceinture, casque. Bon anniversaire Rafi !</p><a class="cta" href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.cta)}</a></div></section>
+    </div></main>
+    <footer>Point de contrôle franchi</footer>`;
+}
+
+function render(p, html = buildReveal(p)){
+  $("checkpoint").hidden = true;
+  document.body.classList.add("reveal-mode");
+  const reveal = $("reveal");
+  reveal.innerHTML = html;
+  reveal.hidden = false;
+  window.scrollTo({top:0, behavior:"instant"});
+  requestAnimationFrame(() => reveal.classList.add("in"));
 }
 </script>
 

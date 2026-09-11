@@ -1,0 +1,5 @@
+- Static HTML/CSS/JS, Google Fonts with fallbacks. No npm/build. Serve entire folder including assets/.
+- Browser Web Crypto: PBKDF2 per-answer keys, AES-GCM shares, HKDF combined reveal key. Use localhost or HTTPS.
+- Updated payload fields: hero{kicker,title,sub}, convocation [k,v][], programme [n,u,d][], sensations[], ecurie, note, sign, url, cta.
+- Cinema uses Web Animations API for zoom/landing and class changes for lights/photo fades. Photo and transparent cutout share exact1086x840 framing.
+- Serena has no language servers for this HTML-only project; symbolic reads and replace_content fail. Text editing fallback needed.

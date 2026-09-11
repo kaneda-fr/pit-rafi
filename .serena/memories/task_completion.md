@@ -1,0 +1,6 @@
+- git diff --check; extract inline script to a temp file and node --check.
+- Compare initial screenshots to original HEAD with footer and Une lettre par case removed. No visible vehicle, brand, birthday text or progress before validation.
+- End-to-end fixture schema must match new supplied gift payload. Test real PBKDF2/AES-GCM/HKDF with synthetic encrypted data in isolated browser only; never add a production bypass.
+- Validate correction/retry, duplicate submit, lights ~1000ms apart, variable hold, silhouette/photo alignment, zoom and photo landing into hero; mobile overflow and reduced motion.
+- Compare S to /Users/kaneda/Downloads/point-de-controle/index.html, not older HEAD. Ensure assets/f4-race-inside.png and assets/f4-cutout.png accompany deployment.
+- Current tests/screenshots are temporary under /private/tmp/pit-rafi-redesign; do not commit test fixtures containing made-up gift details.
